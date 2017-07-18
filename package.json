@@ -1,0 +1,19 @@
+{
+  "name": "portal-nearsoft",
+  "version": "1.0.0",
+  "description": "Nearsoft Garage",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "Nearsoft ",
+  "license": "public",
+  "engines": {
+    "node": ">=4.1.0"
+  },
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*",
+    "dotenv": "*"
+  }
+}
