@@ -8,7 +8,7 @@
 
 		<script type="text/javascript" >
 			var socket=io();
-			socket.on('stream' , function(image){
+			socket.on('hermosillo' , function(image){
 				console.log(image);
 				var img=document.getElementById('play');
 				img.src= image.url;

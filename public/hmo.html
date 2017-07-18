@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>hello</title>
+ 		<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+ 		<link rel="stylesheet" type="text/css" href="css/portal.css">
+ 		<link rel="stylesheet" type="text/css" href="css/site.css">
+	</head>
+	<body>
+
+  <div class="video-container">
+    <div id="remote-media">
+    	<img  id="cuu" style="width:600px;height:800px;"> </img>
+      	<img  id="cdmx" style="width:600px;height:800px;"> </img>
+    	
+    </div>
+  </div>
+  <div id="footer" class="container-fluid" onclick="mute()" ondblclick="unMute()">
+    <div id="preview" class="row">
+      <div id="local-media" class="col-md-1">
+      	<video src="" id="video" style="width:600px;height:800px;display:none;"> </video>
+      </div>
+      <div id="words-container" class="col-md-11 sky">
+         <div  id="wordsDiv" class="emoji iwazaru">
+         </div>
+        
+      </div>
+    </div>
+  </div>
+
+		
+		<canvas  id="myCanvas"  style="display:none;" > </canvas>
+
+		<script type="text/javascript" >
+		var canvas= document.getElementById('myCanvas');
+		var context = canvas.getContext( "2d");
+		canvas.width=600;
+		canvas.height= 800;
+		context.width=600;
+		context.height= 800;
+		var video= document.getElementById('video');
+		var socket =io();
+
+		function loadCam(stream){
+			video.src=window.URL.createObjectURL(stream);
+		};
+		function loadFail(){
+			console.log('error camara');
+		};
+
+		function viewVideo(video, context){
+			context.drawImage(video, 0 , 0, context.width, context.height);
+			socket.emit('hmo', {url : canvas.toDataURL('image/webp')});
+		};
+
+		$(function(){
+
+			navigator.getUserMedia= (navigator.getUserMedia ||navigator.webkitGetUserMedia || navigator.mozGetUserMedia);
+
+			if(navigator.getUserMedia){
+					navigator.getUserMedia({video:true}, loadCam, loadFail);
+			}
+
+			setInterval(function(){viewVideo(video, context)},30);
+
+			var socket=io();
+			socket.on('cdmx' , function(image){
+				console.log(image);
+				var img=document.getElementById('cdmx');
+				img.src= image.url;
+			});
+			socket.on('cuu' , function(image){
+				console.log(image);
+				var img=document.getElementById('cuu');
+				img.src= image.url;
+			});	
+		});
+
+		</script>
+	</body>
+
+</html>

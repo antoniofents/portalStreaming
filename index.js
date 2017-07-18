@@ -16,8 +16,14 @@ app.get('/', function(request,res){
 });
 
 io.on('connection', function(socket){
-	socket.on('stream', function(image){
-		socket.broadcast.emit('stream', image);
+	socket.on('hmo', function(image){
+		socket.broadcast.emit('hmo', image);
+	});
+	socket.on('cdmx', function(image){
+		socket.broadcast.emit('cdmx', image);
+	});
+	socket.on('cuu', function(image){
+		socket.broadcast.emit('cuu', image);
 	});
 });
 
